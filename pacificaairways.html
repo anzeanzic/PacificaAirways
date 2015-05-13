@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script type="text/javascript" src="pacificaairways.js"></script>
+		<style>
+			select { width: 50% !important; display: inline-block !important; }
+			.well label { width: 160px; }
+			input { width: 50% !important; display: inline-block !important; }
+			span { display: inline-block; }
+			.price { margin: 40px 0 40px 0; }
+		</style>
+	</head>
+	<body ng-app="PacificaAirways">
+	 	<div class="container" ng-controller="PAController" style="margin-left: 10px;">
+	 		<div class="row">
+	 			<div class="col-xs-12">
+	 				<h1>Naročilo za nakup letalske karte</h1>
+	 				<div class="well">
+		 				<form name="ticketPurchaseForm">
+		 					<p>
+			 					<label for="departureDate">Datum odhoda:</label>
+			 					<input type="text" class="form-control" name="departureDate" ng-model="departureDate" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[012])\.([1-2][0-9]{3})$/" 
+			 					 ng-required="true" />
+			 					<span class="text-danger" ng-show="ticketPurchaseForm.departureDate.$error.required && ticketPurchaseForm.departureDate.$touched">To polje je obvezno!</span>
+			 					<span class="text-danger" ng-show="ticketPurchaseForm.departureDate.$error.pattern">Napačen format datuma (dd.mm.yyyy)!</span>
+			 				</p>
+			 				<p>
+			 					<label for="arrivalDate">Datum prihoda:</label>
+			 					<input type="text" class="form-control" name="arrivalDate" ng-model="arrivalDate" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[012])\.(2[0-9]{3})$/" ng-required="true" />
+			 					<span class="text-danger" ng-show="ticketPurchaseForm.arrivalDate.$error.required && ticketPurchaseForm.arrivalDate.$touched">To polje je obvezno!</span>
+			 					<span class="text-danger" ng-show="ticketPurchaseForm.arrivalDate.$error.pattern">Napačen format datuma (dd.mm.yyyy)!</span>
+			 				</p>
+			 				<p>
+			 					<label for="departureAirport">Vstopno letališče:</label>
+			 					<select ng-options="airport.name for airport in departureAirportsArray" ng-model="departureAirport" name="departureAirport" class="form-control" ng-change="CalculateCosts(departureAirport, arrivalAirport)" ng-required="true"></select>
+			 					<span class="text-danger" ng-show="ticketPurchaseForm.departureAirport.$error.required && ticketPurchaseForm.departureAirport.$touched">To polje je obvezno!</span>
+			 				</p>
+			 				<p>
+			 					<label for="arrivalAirport">Izstopno letališče:</label>
+			 					<select ng-options="airport.name for airport in arrivalAirportsArray" ng-model="arrivalAirport" name="arrivalAirport" class="form-control" ng-change="CalculateCosts(departureAirport, arrivalAirport)" ng-required="true"></select>
+			 					<span class="text-danger" ng-show="ticketPurchaseForm.arrivalAirport.$error.required && ticketPurchaseForm.arrivalAirport.$touched">To polje je obvezno!</span>
+			 				</p>
+			 				<p>
+			 					<label for="departureDate">Ime in priimek:</label>
+			 					<input type="text" class="form-control" name="name" ng-model="name" />
+			 				</p>
+			 				<p>
+			 					<label for="departureDate">Naslov:</label>
+			 					<input type="text" class="form-control" name="address" ng-model="address" />
+			 				</p>
+			 				<p>
+			 					<label for="departureDate">E-mail:</label>
+			 					<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" />
+			 					<span class="text-danger" ng-show="ticketPurchaseForm.email.$error.required && ticketPurchaseForm.email.$touched">To polje je obvezno!</span>
+			 					<span class="text-danger" ng-show="ticketPurchaseForm.$error.email">Napačno vpisan e-mail!</span>
+			 				</p>
+			 				<p class="price">
+			 					<label>Cena leta: {{ totalCosts }} €</label>
+			 				</p>
+
+		 					<button class="btn btn-primary" ng-click="submitForm()" ng-disabled="ticketPurchaseForm.$invalid">Oddaj!</button>
+		 				</form>
+		 			</div>
+	 			</div>
+	 		</div>
+	 	</div>
+	</body>
+</html>
