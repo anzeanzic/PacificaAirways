@@ -38,12 +38,12 @@
 			 				</p>
 			 				<p>
 			 					<label for="departureAirport">Vstopno letališče:</label>
-			 					<select ng-options="airport.name for airport in departureAirportsArray" ng-model="departureAirport" name="departureAirport" class="form-control" ng-change="CalculateCosts(departureAirport, arrivalAirport)" ng-required="true"></select>
+			 					<select ng-options="airport.name for airport in departureAirportsArray" ng-model="departureAirport" name="departureAirport" class="form-control" ng-required="true"></select>
 			 					<span class="text-danger" ng-show="ticketPurchaseForm.departureAirport.$error.required && ticketPurchaseForm.departureAirport.$touched">To polje je obvezno!</span>
 			 				</p>
 			 				<p>
 			 					<label for="arrivalAirport">Izstopno letališče:</label>
-			 					<select ng-options="airport.name for airport in arrivalAirportsArray" ng-model="arrivalAirport" name="arrivalAirport" class="form-control" ng-change="CalculateCosts(departureAirport, arrivalAirport)" ng-required="true"></select>
+			 					<select ng-options="airport.name for airport in arrivalAirportsArray" ng-model="arrivalAirport" name="arrivalAirport" class="form-control" ng-required="true"></select>
 			 					<span class="text-danger" ng-show="ticketPurchaseForm.arrivalAirport.$error.required && ticketPurchaseForm.arrivalAirport.$touched">To polje je obvezno!</span>
 			 				</p>
 			 				<p>
@@ -61,7 +61,7 @@
 			 					<span class="text-danger" ng-show="ticketPurchaseForm.$error.email">Napačno vpisan e-mail!</span>
 			 				</p>
 			 				<p class="price">
-			 					<label>Cena leta: {{ totalCosts }} €</label>
+			 					<label>Cena leta: {{ CalculateCosts(departureAirport, arrivalAirport) }} €</label>
 			 				</p>
 
 		 					<button class="btn btn-primary" ng-click="submitForm()" ng-disabled="ticketPurchaseForm.$invalid">Oddaj!</button>

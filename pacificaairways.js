@@ -10,7 +10,10 @@ angular.module('PacificaAirways').controller('PAController', function($scope) {
 	
 	$scope.CalculateCosts = function(departureAirport, arrivalAirport) {
 		if (departureAirport !== undefined && arrivalAirport !== undefined) {
-			$scope.totalCosts = departureAirport.price + arrivalAirport.price;
+			return departureAirport.price + arrivalAirport.price;
+		}
+		else {
+			return 0;
 		}
 	}
 });
